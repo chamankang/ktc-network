@@ -9,15 +9,15 @@ recipe		  "ktc-network::default", "Installs packages required for network-server
   supports os
 end
 
-depends "git"
+depends "ktc-logging"
+depends "ktc-monitor"
+depends "ktc-package"
 depends "ktc-utils", "> 0.3.1"
+depends "modules"
 depends "openstack-common", "~> 0.4.3"
 depends "openstack-network", "~> 7.0.0"
 depends "python"
 depends "services"
+depends "simple_iptables"
 depends "sudo"
 depends "sysctl"
-depends "simple_iptables"
-depends "modules"
-depends "ktc-monitor"
-depends "ktc-logging"
