@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ktc-network
-# Recipe:: source_install
+# Recipe:: package_install
 #
 
 include_recipe "sudo"
