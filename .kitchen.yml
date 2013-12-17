@@ -6,7 +6,7 @@ provisioner:
 driver:
   name: vagrant
   customize:
-    memory: 512
+    memory: 1024
 
 platforms:
   - name: centos-6.4
