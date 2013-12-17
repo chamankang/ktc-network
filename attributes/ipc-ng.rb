@@ -2,6 +2,8 @@ return  unless chef_environment == "ipc-ng"
 # we want to override defaults
 include_attribute "ktc-network::ng_l3"
 
+default["quantum_version"] = "2013.2.dev1581.g1515fa7"
+
 # override this like the example below
 default["openstack"]["network"]["ng_l3"]["setup_entities"] = true
 default["openstack"]["network"]["ng_l3"]["networks"] = [
