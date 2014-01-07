@@ -29,24 +29,8 @@ directory "/var/log/quantum" do
   action :create
 end
 
-# Install pip-requires using ubuntu packages first, then install the rest with pip.
-# Prefer installing ubuntu pakcages to compiling python modules on nodes.
-node["openstack"]["network"]["platform"]["pip_requires_packages"].each do |pkg|
+node["openstack"]["network"]["platform"]["requires_packages"].each do |pkg|
   package pkg
-end
-
-src = "https://raw.github.com/openstack/neutron/stable/havana/requirements.txt"
-loc = "#{Chef::Config[:file_cache_path]}/requirements.txt"
-
-remote_file loc do
-  source src
-  not_if { ::File.exist?(loc) }
-end
-
-python_pip "quantum-pip-requires" do
-  package_name loc
-  options "-r"
-  action :nothing
 end
 
 package "quantum" do

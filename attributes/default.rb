@@ -37,13 +37,14 @@ default["openstack"]["network"]["platform"]["quantum_client_packages"] = []
 default["openstack"]["network"]["platform"]["quantum_dhcp_packages"] = []
 default["openstack"]["network"]["platform"]["quantum_l3_packages"] = []
 default["openstack"]["network"]["platform"]["quantum_metadata_agent_packages"] = []
-default["openstack"]["network"]["platform"]["pip_requires_packages"] = %w{
+default["openstack"]["network"]["platform"]["requires_packages"] = %w{
   python-cliff python-cmd2 python-pyparsing python-paste python-pastedeploy
   python-routes python-amqplib python-anyjson python-eventlet python-greenlet
   python-httplib2 python-iso8601 python-kombu python-netaddr python-pyudev
   python-sqlalchemy python-webob python-keystoneclient alembic python-oslo.config
-  python-quantumclient
+  python-quantumclient python-novaclient python-amqp python-tz
 }
+
 default["openstack"]["network"]["platform"]["quantum_linuxbridge_agent_service"] = "quantum-plugin-linuxbridge-agent"
 
 # use syslog by default
