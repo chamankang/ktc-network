@@ -3,7 +3,7 @@
 # Recipe:: common
 #
 
-include_recipe "ktc-network::source_install"
+include_recipe "ktc-network::package_install"
 include_recipe "openstack-network::common"
 
 chef_gem "chef-rewind"
