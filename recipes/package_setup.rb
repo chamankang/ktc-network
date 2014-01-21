@@ -27,9 +27,11 @@ sudo "quantum_sudoers" do
 end
 
 %w|
+  /var/cache/quantum
+  /var/cache/quantum/api
+  /var/lib/quantum/.python-eggs
   /var/log/quantum
   /var/run/quantum
-  /var/lib/quantum/.python-eggs
 |.each do |d|
   directory "#{d}" do
     owner node["openstack"]["network"]["platform"]["user"]
