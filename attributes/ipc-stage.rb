@@ -36,6 +36,38 @@ default["openstack"]["network"]["ng_l3"]["networks"] = [
       "multihost:multi_host" => true,
       "shared" => true
     }
+  },
+  {
+    "zone" => "cheonan.prod.ktis",
+    "options" => {
+      "name" => "cheonan.prod.ktis",
+      "multihost:multi_host" => true,
+      "shared" => true
+    }
+  },
+  {
+    "zone" => "cheonan.prod.ktis",
+    "options" => {
+      "name" => "cheonan.prod.ktis.private",
+      "multihost:multi_host" => true,
+      "shared" => true
+    }
+  },
+  {
+    "zone" => "cheonan.prod.dmz",
+    "options" => {
+      "name" => "cheonan.prod.dmz",
+      "multihost:multi_host" => true,
+      "shared" => true
+    }
+  },
+  {
+    "zone" => "cheonan.prod.dmz",
+    "options" => {
+      "name" => "cheonan.prod.dmz.private",
+      "multihost:multi_host" => true,
+      "shared" => true
+    }
   }
 ]
 default["openstack"]["network"]["ng_l3"]["subnets"] = [
@@ -85,6 +117,54 @@ default["openstack"]["network"]["ng_l3"]["subnets"] = [
       "dns_nameservers" => ["8.8.8.8"],
       "gateway_ip" => :null,
       "allocation_pools" => [{ "start" => "10.210.13.11", "end" => "10.210.13.250" }]
+    }
+  },
+  {
+    "zone" => "cheonan.prod.ktis",
+    "search_id" => { :network => { "name" => "cheonan.prod.ktis" } },
+    "options" => {
+      "network_id" => :network,
+      "name" => "cheonan.prod.ktis",
+      "cidr" => "10.210.14.0/24",
+      "dns_nameservers" => ["8.8.8.8"],
+      "gateway_ip" => :null,
+      "allocation_pools" => [{ "start" => "10.210.14.11", "end" => "10.210.14.250" }]
+    }
+  },
+  {
+    "zone" => "cheonan.prod.ktis",
+    "search_id" => { :network => { "name" => "cheonan.prod.ktis.private" } },
+    "options" => {
+      "network_id" => :network,
+      "name" => "cheonan.prod.ktis.private",
+      "cidr" => "10.210.15.0/24",
+      "dns_nameservers" => ["8.8.8.8"],
+      "gateway_ip" => :null,
+      "allocation_pools" => [{ "start" => "10.210.15.11", "end" => "10.210.15.250" }]
+    }
+  },
+  {
+    "zone" => "cheonan.prod.dmz",
+    "search_id" => { :network => { "name" => "cheonan.prod.dmz" } },
+    "options" => {
+      "network_id" => :network,
+      "name" => "cheonan.prod.dmz",
+      "cidr" => "10.210.16.0/24",
+      "dns_nameservers" => ["8.8.8.8"],
+      "gateway_ip" => :null,
+      "allocation_pools" => [{ "start" => "10.210.16.11", "end" => "10.210.16.250" }]
+    }
+  },
+  {
+    "zone" => "cheonan.prod.dmz",
+    "search_id" => { :network => { "name" => "cheonan.prod.dmz.private" } },
+    "options" => {
+      "network_id" => :network,
+      "name" => "cheonan.prod.dmz.private",
+      "cidr" => "10.210.17.0/24",
+      "dns_nameservers" => ["8.8.8.8"],
+      "gateway_ip" => :null,
+      "allocation_pools" => [{ "start" => "10.210.17.11", "end" => "10.210.17.250" }]
     }
   }
 ]
