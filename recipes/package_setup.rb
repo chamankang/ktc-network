@@ -23,7 +23,7 @@ sudo "quantum_sudoers" do
   host     "ALL"
   runas    "root"
   nopasswd true
-  commands ["/usr/local/bin/quantum-rootwrap"]
+  commands ["/usr/bin/quantum-rootwrap"]
 end
 
 %w|
