@@ -65,3 +65,7 @@ end
     to "/opt/openstack/quantum/bin/#{p}"
   end
 end
+
+link "/usr/bin/neutron" do
+  to "/opt/openstack/quantumclient/bin/neutron"
+end
