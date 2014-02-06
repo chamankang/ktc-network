@@ -286,7 +286,7 @@ quota_subnet = -1
 quota_port = -1
 
 # number of security groups allowed per tenant, and minus means unlimited
-# quota_security_group = 10
+quota_security_group = <%= node["openstack"]["network"]["quota_security_group"] %>
 
 # number of security group rules allowed per tenant, and minus means unlimited
 # quota_security_group_rule = 100

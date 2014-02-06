@@ -30,6 +30,7 @@ default["openstack"]["network"]["dhcp"]["enable_isolated_metadata"] = "True"
 default["openstack"]["network"]["linuxbridge"]["sqlalchemy_pool_size"] = 20
 default["openstack"]["network"]["linuxbridge"]["sqlalchemy_max_overflow"] = 50
 default["openstack"]["network"]["linuxbridge"]["sqlalchemy_pool_timeout"] = 30
+default["openstack"]["network"]["quota_security_group"] = 100
 default["openstack"]["network"]["platform"]["quantum_linuxbridge_agent_service"] = "quantum-plugin-linuxbridge-agent"
 default["openstack"]["network"]["platform"]["mysql_python_packages"] = []
 default["openstack"]["network"]["platform"]["postgresql_python_packages"] = []
