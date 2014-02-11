@@ -18,6 +18,7 @@
 ##
 
 include_attribute 'openstack-network::default'
+include_attribute 'ktc-package::default'
 
 default['openstack']['network']['api']['agent']['agent_report_interval'] = 4
 default['openstack']['network']['rabbit_server_chef_role'] = 'ktc-messaging'
@@ -71,3 +72,5 @@ default['openstack']['network']['agent_processes'] = [
   { 'name' => 'quagga/ripd', 'shortname' => 'ripd' },
   { 'name' => 'dnsmasq', 'shortname' => 'dnsmasq' }
 ]
+
+default['openstack']['network']['dhcp']['dnsmasq_url'] = "http://#{node[:repo_host]}/prod/kt/storage/v2.65.tar.gz"
