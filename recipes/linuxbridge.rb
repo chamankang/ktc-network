@@ -17,20 +17,20 @@
 # limitations under the License.
 #
 
-cookbook_file "/etc/init/quantum-plugin-linuxbridge-agent.conf" do
-  source "etc/init/quantum-plugin-linuxbridge-agent.conf"
+cookbook_file '/etc/init/quantum-plugin-linuxbridge-agent.conf' do
+  source 'etc/init/quantum-plugin-linuxbridge-agent.conf'
   action :create
-  notifies :restart, "service[quantum-plugin-linuxbridge-agent]", :immediately
+  notifies :restart, 'service[quantum-plugin-linuxbridge-agent]', :immediately
 end
 
-platform_options = node["openstack"]["network"]["platform"]
+platform_options = node['openstack']['network']['platform']
 
-tmpl = "template[/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini]"
+tmpl = 'template[/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini]'
 
-service "quantum-plugin-linuxbridge-agent" do
-  service_name platform_options["quantum_linuxbridge_agent_service"]
+service 'quantum-plugin-linuxbridge-agent' do
+  service_name platform_options['quantum_linuxbridge_agent_service']
   provider Chef::Provider::Service::Upstart
-  supports :status => true, :restart => true
+  supports status: true, restart: true
   action :enable
   subscribes :restart, tmpl, :delayed
   subscribes :restart, "git[#{Chef::Config[:file_cache_path]}/quantum]"

@@ -1,0 +1,7 @@
+# TODO: these are hacks, please write some chefspec tests for these libraries
+# and fix them properly
+LineLength:
+  Max: 120
+
+MethodLength:
+  Max: 30
