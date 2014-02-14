@@ -14,7 +14,11 @@ processes = node['openstack']['network']['agent_processes']
 processes.each do |process|
   check_name = process['name'].gsub(/\//, '_')
   sensu_check "check_process_#{check_name}" do
-    command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
+    if check_name == "quantum-dhcp-agent" then
+      command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -u quantum -p #{process['name']}"
+    else
+      command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
+    end
     handlers ["default"]
     standalone true
     interval 30
