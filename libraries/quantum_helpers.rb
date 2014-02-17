@@ -1,6 +1,6 @@
 module KTC
+  # Quantum helpers
   module Quantum
-
     def find_existing_entity(list_type, request_options)
       # change :null to nil
       refined_options = Hash[request_options.map { |k, v| [k, (v == :null ? nil : v)] }]
@@ -13,16 +13,17 @@ module KTC
       elsif entity_list.length == 1
         entity = entity_list[0]
       else
-        msg = "Found multiple existing #{list_type}:\n"\
-          "#{entity_list.join("\n")}\n"\
-            "Need more specific options. Stop here."
-          raise RuntimeError, msg
+        msg = "Found multiple existing #{list_type}:\n" \
+          "#{entity_list.join("\n")}\n" \
+          "Need more specific options. Stop here."
+        fail msg
       end
       entity
     end
 
     def store_id_in_attr(id, attr_path)
       attr_name = "node.set.#{attr_path}"
+      # rubocop:disable Eval
       eval "#{attr_name} = '#{id}'"
       Chef::Log.info "Set #{attr_name} to '#{id}'"
     end
@@ -30,7 +31,8 @@ module KTC
     def send_request(request, entity_options = {}, *args)
       options = Hash[entity_options.map { |k, v| [k.gsub(':', '_').to_sym, v] }]
       begin
-        resp = @quantum.send(request, *args, options)
+        @quantum.send(request, *args, options)
+      # rubocop:disable RescueException
       rescue Exception => e
         Chef::Log.error "An error occured with options: #{options}"
         raise e
@@ -40,14 +42,14 @@ module KTC
     def get_id_from_macro(macro, search_map)
       macro_list = [:router, :network, :subnet, :port]
       if macro_list.include? macro
-        if search_map.has_key? macro
+        if search_map.key? macro
           entity = find_existing_entity "#{macro.to_s}s", search_map[macro]
-          id = entity["id"]
+          id = entity['id']
         else
-          raise RuntimeError, "Must give :#{macro} options in 'search_id' attribute"
+          fail "Must give :#{macro} options in 'search_id' attribute"
         end
       else
-        raise RuntimeError, "Macro must be one of #{macro_list}. You gave :#{macro}."
+        fail "Macro must be one of #{macro_list}. You gave :#{macro}."
       end
       id
     end
@@ -69,9 +71,8 @@ module KTC
 
     def get_complete_options(default_options, resource_options)
       default_options.each do |k, v|
-        if (v == nil) && (!resource_options.has_key? k)
-          raise(
-            RuntimeError,
+        if (v.nil?) && (!resource_options.key? k)
+          fail(
             "Must give option \"#{k}\". Given options: #{resource_options}"
           )
         end
@@ -83,6 +84,5 @@ module KTC
     def need_update?(required_options, existing_options)
       !(required_options.to_a - existing_options.to_a).empty?
     end
-
   end
 end

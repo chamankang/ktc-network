@@ -1,7 +1,7 @@
 begin
   require 'fog'
 rescue LoadError
-  Chef::Log.info "fog gem not found. Attempting to install "
+  Chef::Log.info 'fog gem not found. Attempting to install '
   # we do this cause there are some pacakges and system things that
   # may need to get installed as well as this gem
   Gem::DependencyInstaller.new.install('fog')
@@ -14,7 +14,7 @@ require 'fog/openstack/requests/network/create_router'
 module Fog
   module Network
     class OpenStack
-
+      # Fog monkey patch
       class Real
         def create_network(options = {})
           data = { 'network' => {} }
@@ -35,20 +35,20 @@ module Fog
           ]
 
           aliases = {
-            :provider_network_type     => 'provider:network_type',
-            :provider_physical_network => 'provider:physical_network',
-            :provider_segmentation_id  => 'provider:segmentation_id',
-            :router_external           => 'router:external',
-            :multihost_multi_host      => 'multihost:multi_host'
+            provider_network_type: 'provider:network_type',
+            provider_physical_network: 'provider:physical_network',
+            provider_segmentation_id: 'provider:segmentation_id',
+            router_external: 'router:external',
+            multihost_multi_host: 'multihost:multi_host'
           }
 
           data['network'].merge! osum(vanilla_options, provider_options, options, aliases)
 
           request(
-            :body     => Fog::JSON.encode(data),
-            :expects  => [201],
-            :method   => 'POST',
-            :path     => 'networks'
+            body: Fog::JSON.encode(data),
+            expects: [201],
+            method: 'POST',
+            path: 'networks'
           )
         end
 
@@ -57,27 +57,27 @@ module Fog
             'subnet' => {
               'network_id' => network_id,
               'cidr'       => cidr,
-              'ip_version' => ip_version,
+              'ip_version' => ip_version
             }
           }
 
           vanilla_options = [:name, :gateway_ip, :allocation_pools,
-            :dns_nameservers, :host_routes, :enable_dhcp,
-            :tenant_id]
+                             :dns_nameservers, :host_routes, :enable_dhcp,
+                             :tenant_id]
           data['subnet'].merge! osum(vanilla_options, [], options, {})
 
           request(
-            :body     => Fog::JSON.encode(data),
-            :expects  => [201],
-            :method   => 'POST',
-            :path     => 'subnets'
+            body: Fog::JSON.encode(data),
+            expects: [201],
+            method: 'POST',
+            path: 'subnets'
           )
         end
 
         def create_router(name, options = {})
           data = {
             'router' => {
-              'name' => name,
+              'name' => name
             }
           }
 
@@ -87,7 +87,7 @@ module Fog
             :network_id,
             :external_gateway_info,
             :status,
-            :subnet_id,
+            :subnet_id
           ]
 
           provider_options = [
@@ -95,20 +95,21 @@ module Fog
           ]
 
           aliases = {
-            :multihost_network_id => 'multihost:network_id'
+            multihost_network_id: 'multihost:network_id'
           }
 
           data['router'].merge! osum(vanilla_options, provider_options, options, aliases)
 
           request(
-            :body     => Fog::JSON.encode(data),
-            :expects  => [201],
-            :method   => 'POST',
-            :path     => 'routers'
+            body: Fog::JSON.encode(data),
+            expects: [201],
+            method: 'POST',
+            path: 'routers'
           )
         end
 
         private
+
         def osum(vanilla_options, provider_options, options, aliases)
           data = {}
           joined_options = vanilla_options | provider_options
@@ -121,7 +122,6 @@ module Fog
           data
         end
       end
-
     end
   end
 end

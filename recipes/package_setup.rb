@@ -3,27 +3,27 @@
 # Recipe:: package_setup
 #
 
-include_recipe "sudo"
-include_recipe "ktc-package"
+include_recipe 'sudo'
+include_recipe 'ktc-package'
 
-group node["openstack"]["network"]["platform"]["group"] do
+group node['openstack']['network']['platform']['group'] do
   system true
 end
 
-user node["openstack"]["network"]["platform"]["user"] do
-  home "/var/lib/quantum"
-  gid node["openstack"]["network"]["platform"]["group"]
-  shell "/bin/false"
+user node['openstack']['network']['platform']['user'] do
+  home '/var/lib/quantum'
+  gid node['openstack']['network']['platform']['group']
+  shell '/bin/false'
   system  true
-  supports :manage_home => true
+  supports manage_home: true
 end
 
-sudo "quantum_sudoers" do
-  user     node["openstack"]["network"]["platform"]["user"]
-  host     "ALL"
-  runas    "root"
+sudo 'quantum_sudoers' do
+  user     node['openstack']['network']['platform']['user']
+  host     'ALL'
+  runas    'root'
   nopasswd true
-  commands ["/usr/bin/quantum-rootwrap"]
+  commands ['/usr/bin/quantum-rootwrap']
 end
 
 %w|
@@ -34,8 +34,8 @@ end
   /var/run/quantum
 |.each do |d|
   directory "#{d}" do
-    owner node["openstack"]["network"]["platform"]["user"]
-    group node["openstack"]["network"]["platform"]["group"]
+    owner node['openstack']['network']['platform']['user']
+    group node['openstack']['network']['platform']['group']
     mode 00755
     action :create
   end
@@ -66,6 +66,6 @@ end
   end
 end
 
-link "/usr/bin/neutron" do
-  to "/opt/openstack/quantumclient/bin/neutron"
+link '/usr/bin/neutron' do
+  to '/opt/openstack/quantumclient/bin/neutron'
 end
