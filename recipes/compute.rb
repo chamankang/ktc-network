@@ -4,9 +4,7 @@
 ##
 
 include_recipe 'ktc-network::agents'
-if node['openstack']['network']['ng_l3']['setup_entities']
-  include_recipe 'ktc-network::post_install'
-end
+include_recipe 'ktc-network::post_install' if node['openstack']['network']['ng_l3']['setup_entities']
 
 # Since quagga is started in post_install recipe, I think it's better to put
 # the monitoring stuff here instead of 'agents' recipe.
@@ -15,7 +13,11 @@ processes = node['openstack']['network']['agent_processes']
 processes.each do |process|
   check_name = process['name'].gsub(/\//, '_')
   sensu_check "check_process_#{check_name}" do
-    command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
+    if check_name == 'quantum-dhcp-agent'
+      command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -u quantum -p #{process['name']}"
+    else
+      command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
+    end
     handlers ['default']
     standalone true
     interval 30
