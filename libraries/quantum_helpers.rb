@@ -4,7 +4,8 @@ module KTC
     def find_existing_entity(list_type, request_options)
       # change :null to nil
       refined_options = Hash[request_options.map { |k, v| [k, (v == :null ? nil : v)] }]
-      # reject array type options from request options because those cause quantum internal server error
+      # reject array type options  from request options because those cause
+      # quantum internal server error
       refined_options.reject! { |k, v| v.kind_of? Array }
       response = send_request "list_#{list_type}", refined_options
       entity_list = response[:body][list_type]

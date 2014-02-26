@@ -11,7 +11,14 @@ AllCops:
     - test/**
     - vendor/**
 
+MethodLength:
+  Max: 30
+
+LineLength:
+  Max: 117
+
 Encoding:
+  Enabled: false
   Exclude:
     - metadata.rb
     - Gemfile
