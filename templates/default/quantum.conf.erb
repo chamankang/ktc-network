@@ -289,7 +289,7 @@ quota_port = -1
 quota_security_group = <%= node["openstack"]["network"]["quota_security_group"] %>
 
 # number of security group rules allowed per tenant, and minus means unlimited
-# quota_security_group_rule = 100
+quota_security_group_rule = -1
 
 # default driver to use for quota checks
 # quota_driver = quantum.quota.ConfDriver
