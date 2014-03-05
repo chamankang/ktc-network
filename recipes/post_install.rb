@@ -24,12 +24,8 @@ zone_cidrs = zone_subnets.map { |s| s['options']['cidr'] }
 management_cidr = nil
 iface = KTC::Network.if_lookup 'management'
 ip = KTC::Network.address 'management'
-node['network']['interfaces'][iface]['routes'].each do |route|
-  if route.key?('src') && (route['src'] == ip)
-    management_cidr = route['destination']
-    break
-  end
-end
+prefix = node['network']['interfaces'][iface]['addresses'][ip]['prefixlen']
+management_cidr = IPAddr.new("#{ip}/#{prefix}").to_s
 
 # rubocop:disable LineLength
 rip_iface = KTC::Network.if_lookup node['openstack']['network']['quagga']['rip_network']
