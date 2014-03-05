@@ -25,7 +25,8 @@ management_cidr = nil
 iface = KTC::Network.if_lookup 'management'
 ip = KTC::Network.address 'management'
 prefix = node['network']['interfaces'][iface]['addresses'][ip]['prefixlen']
-management_cidr = IPAddr.new("#{ip}/#{prefix}").to_s
+management_net = IPAddr.new("#{ip}/#{prefix}").to_s
+management_cidr = "#{management_net}/#{prefix}"
 
 # rubocop:disable LineLength
 rip_iface = KTC::Network.if_lookup node['openstack']['network']['quagga']['rip_network']
