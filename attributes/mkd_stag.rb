@@ -104,7 +104,7 @@ default['openstack']['network']['ng_l3']['subnets'] = [
       'cidr' => '14.63.205.32/27',
       'dns_nameservers' => ['8.8.8.8'],
       'gateway_ip' => :null,
-      'allocation_pools' => [{ 'start' => '14.63.205.34', 'end' => '14.63.205.62'}]
+      'allocation_pools' => [{ 'start' => '14.63.205.34', 'end' => '14.63.205.62' }]
     }
   },
   {
