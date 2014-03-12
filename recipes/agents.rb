@@ -39,13 +39,12 @@ require 'chef/rewind'
   cookbook_file "/etc/init/quantum-#{agent}-agent.conf" do
     source "etc/init/quantum-#{agent}-agent.conf"
     action :create
-    notifies :restart, "service[quantum-#{agent}-agent]", :immediately
+    notifies :restart, "service[quantum-#{agent}-agent]", :delayed
   end
 
   include_recipe "openstack-network::#{agent}_agent"
   rewind service: "quantum-#{agent}-agent" do
     provider Chef::Provider::Service::Upstart
-    subscribes :restart, "git[#{Chef::Config[:file_cache_path]}/quantum]"
   end
 
   rewind template: "/etc/quantum/#{agent}_agent.ini" do
